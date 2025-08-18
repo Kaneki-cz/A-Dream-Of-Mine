@@ -28,7 +28,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  color: white;
+  color: rgb(27, 129, 201);
   font-family: 'Courier New', Courier, monospace;
 
   display: flex;
