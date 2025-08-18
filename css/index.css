@@ -41,7 +41,15 @@ body {
   height: 100vh;
   text-shadow: 0 0 20px white;
   letter-spacing: 0px;
+
+  /* ✅ new responsive fixes */
+  white-space: normal;          /* allow wrapping */
+  word-break: break-word;       /* wrap without cutting letters */
+  font-size: clamp(16px, 5vw, 32px); /* scales for mobile → desktop */
+  text-align: center;           /* center multi-line text */
+  padding: 0 5%;                /* add breathing room on small screens */
 }
+
 
 @media (min-width: 500px) {
   .title {
