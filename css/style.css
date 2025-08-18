@@ -1241,3 +1241,12 @@ body {
     max-width: 90vw;
   }
 }
+#introVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1; /* stays behind flowers and text */
+}
