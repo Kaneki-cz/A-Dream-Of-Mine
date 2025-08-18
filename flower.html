@@ -14,14 +14,14 @@
   <style>
 #introVideo {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 768px;
-  height: 576px;
-  transform: translate(-50%, -50%); /* perfectly center it */
-  object-fit: contain;  /* keeps full video frame */
-  background: black;    /* black bars outside video */
-  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: contain;    /* ✅ show whole video */
+  object-position: center;
+  background: black;      /* black bars fill empty space */
+  z-index: 9999;            /* behind text/flowers */
 }
   </style>
   
