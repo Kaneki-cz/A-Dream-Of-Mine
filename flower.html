@@ -12,16 +12,17 @@
   <title>FLOWERS</title>
   <!-- Extra video styling -->
   <style>
-    #introVideo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 9999;
-      background: black;
-    }
+#introVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;         
+  object-fit: contain;   /* show full video, black bars allowed */
+  object-position: center;
+  background: black;     /* black bars color */
+  z-index: -1;           /* behind text/flowers */
+}
   </style>
   
 <style>
