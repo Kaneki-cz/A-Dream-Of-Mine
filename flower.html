@@ -63,6 +63,34 @@
   display: block !important;
   opacity: 1 !important;
 }
+#unmuteBtn {
+  position: absolute;
+  bottom: 80px;   /* was 20px, moved up */
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  background: #ff69b4;
+  color: white;
+  box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+  display: none;
+  z-index: 10000;
+  transition: transform 0.2s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+  opacity: 0;
+}
+
+#unmuteBtn.show {
+  display: block;
+  opacity: 1;
+}
+
+    #unmuteBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #ff69b4, 0 0 40px #ff1493;
+    }
 </style>
 </head>
 
@@ -70,11 +98,14 @@
   <!-- Background -->
   <div class="night"></div>
 
-  <!-- Intro Video -->
-  <video id="introVideo" width="100%" height="100%" autoplay>
-    <source src="video/intro.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+<video id="introVideo" autoplay muted playsinline>
+  <source src="video/intro.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<!-- Tap-to-unmute button (only shows if user wants sound) -->
+<button id="unmuteBtn">🔊 Tap for Sound</button>
+
   <!-- Flower -->
   <div class="flowers" style="display: none;">
     <div class="flower flower--1">
@@ -392,10 +423,9 @@
   const titleElement = document.getElementById("title");
   const cdLeft  = document.getElementById("countdown-left");
   const cdRight = document.getElementById("countdown-right");
-  const cdLeftTime  = cdLeft.querySelector(".time");
-  const cdRightTime = cdRight.querySelector(".time");
+  const unmuteBtn = document.getElementById("unmuteBtn");
 
-  // Keep title empty & hidden until video ends
+  // Keep title hidden until video ends
   titleElement.style.visibility = "hidden";
   titleElement.textContent = "";
 
@@ -420,7 +450,6 @@
   function updateCountdown(el, targetMs) {
     const now = Date.now();
     const distance = targetMs - now;
-
     const timeBox = el.querySelector(".time");
     if (!timeBox) return;
 
@@ -437,19 +466,15 @@
   }
 
   function startCountdowns() {
-    // Fade-in countdown boxes
     cdLeft.classList.add("show");
     cdRight.classList.add("show");
 
-    // Target dates (local time)
     const bday1 = new Date("September 30, 2025 00:00:00").getTime();
     const bday2 = new Date("October 8, 2025 00:00:00").getTime();
 
-    // Initial paint
     updateCountdown(cdLeft, bday1);
     updateCountdown(cdRight, bday2);
 
-    // Update every second
     setInterval(() => {
       updateCountdown(cdLeft, bday1);
       updateCountdown(cdRight, bday2);
@@ -457,36 +482,53 @@
   }
 
   function revealFlowersAndTitleThenCountdowns() {
-    // Show flowers + start animations
     flowers.style.display = "block";
     document.body.classList.remove("not-loaded");
-
-    // Type the sentence, then start countdowns
     typeSentence(quote, titleElement, 30, startCountdowns);
   }
 
   // ---- Video flow ----
-  // Ensure the video sits on top while playing (your CSS should already set z-index high)
-  // When video ends: hide video -> reveal flowers -> type title -> show countdowns
-  video.addEventListener("ended", () => {
-    video.style.display = "none";
-    revealFlowersAndTitleThenCountdowns();
-  });
+video.addEventListener("ended", () => {
+  // Hide button completely
+  unmuteBtn.classList.remove("show");   // remove CSS class
+  unmuteBtn.style.display = "none";     // hide from screen
+  unmuteBtn.disabled = true;            // prevent any further clicks
 
-  // Safety: if the video can't play or is super short, still proceed after a fallback timeout
+  // Hide video and show flowers + text
+  video.style.display = "none";
+  revealFlowersAndTitleThenCountdowns();
+});
   video.addEventListener("error", () => {
-    // proceed after 1s if video fails
     setTimeout(() => {
       video.style.display = "none";
       revealFlowersAndTitleThenCountdowns();
     }, 1000);
   });
 
-  // If the video is already ended (e.g., reloaded at end), proceed
   if (video.readyState >= 2 && video.duration && video.currentTime >= video.duration - 0.2) {
     video.style.display = "none";
     revealFlowersAndTitleThenCountdowns();
   }
+
+  // ---- iPhone Safari Fixes ----
+unmuteBtn.addEventListener("click", () => {
+  if (video.style.display === "none") return; // do nothing if video ended
+  video.muted = false;
+  video.play();
+  unmuteBtn.style.display = "none"; // hide button after unmuting
+});
+
+  // Show unmute button once video can play
+  video.addEventListener("canplay", () => {
+    unmuteBtn.classList.add("show");
+  });
+
+  // Handle unmute when button is tapped
+  unmuteBtn.addEventListener("click", () => {
+    video.muted = false;
+    video.play();
+    unmuteBtn.style.display = "none";
+  });
 </script>
 </body>
 </html>
