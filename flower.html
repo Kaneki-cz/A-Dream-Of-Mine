@@ -8,9 +8,8 @@
   <link rel="shortcut icon" href="images/gift.png" type="image/x-icon">
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Document Title -->
-  <title>FLOWERS</title>
-  <!-- Extra video styling -->
+  <title>Surprise!</title>
+  <!--Styling for the video here, because I'm an idiot*-*-->
   <style>
 #introVideo {
   position: fixed;
@@ -18,21 +17,18 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  object-fit: contain;    /* ✅ show whole video */
+  object-fit: contain;
   object-position: center;
-  background: black;      /* black bars fill empty space */
-  z-index: 9999;            /* behind text/flowers */
+  background: rgb(0, 0, 0);
+  z-index: 9999;
 }
-  </style>
-  
-<style>
   .countdown {
   position: fixed;
   top: 60%;
   transform: translateY(-50%);
   font-family: 'Courier New', Courier, monospace;
   font-size: clamp(16px, 2vw, 26px); /* responsive */
-  color: #ff69b4; /* Pink glow */
+  color: #ff69b4;
   text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493, 0 0 30px #ff69b4;
   padding: clamp(8px, 1.5vw, 14px) clamp(10px, 2vw, 18px);
   background: rgba(0,0,0,0.25);
@@ -65,7 +61,7 @@
 }
 #unmuteBtn {
   position: absolute;
-  bottom: 80px;   /* was 20px, moved up */
+  bottom: 80px;
   right: 20px;
   width: 60px;
   height: 60px;
@@ -103,7 +99,7 @@
   Your browser does not support the video tag.
 </video>
 
-<!-- Tap-to-unmute button (only shows if user wants sound) -->
+<!--To solve the autoplay problem for Safary-->
 <button id="unmuteBtn">🔊 Tap for Sound</button>
 
   <!-- Flower -->
@@ -406,13 +402,12 @@
 
   <h1 class="title"><span id="title"></span></h1>
 <div id="countdown-left" class="countdown">
-  <div class="label">Until Sept 30 🎀💖</div>
+  <div class="label">Until Jan 26 🎀💖</div>
   <div class="time">—</div>
 </div>
 
-<!-- Countdown Right (8th October) -->
 <div id="countdown-right" class="countdown">
-  <div class="label">Until Oct 8 🎀💖</div>
+  <div class="label">Until Jan 13 🎀💖</div>
   <div class="time">—</div>
 </div>
 <script src="js/main.js"></script>
@@ -430,7 +425,7 @@
   titleElement.textContent = "";
 
   // Your sentence
-  const quote = "I know I messed up so much in the past ,Darling. But I promise to make it up to you,one day.Thanks for not being just my friend but also a peaceful home that comforts me. Thanks for all the great memories we made together.Thanks for being the one who made me do all my best and always wanted to be better.You'll always have a special place in my heart,Noury❤🌑." ;
+  const quote = "Test<3." ;
 
   // ---- Helpers ----
   function typeSentence(text,el, speed, done) {
@@ -469,8 +464,8 @@
     cdLeft.classList.add("show");
     cdRight.classList.add("show");
 
-    const bday1 = new Date("September 30, 2025 00:00:00").getTime();
-    const bday2 = new Date("October 8, 2025 00:00:00").getTime();
+    const bday1 = new Date("January 26, 2026 00:00:00").getTime();
+    const bday2 = new Date("January 13, 2026 00:00:00").getTime();
 
     updateCountdown(cdLeft, bday1);
     updateCountdown(cdRight, bday2);
